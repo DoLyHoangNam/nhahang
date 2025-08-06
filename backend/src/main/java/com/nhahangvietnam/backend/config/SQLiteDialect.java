@@ -7,7 +7,7 @@ import org.hibernate.dialect.identity.IdentityColumnSupportImpl;
 public class SQLiteDialect extends Dialect {
 
     public SQLiteDialect() {
-        super();
+      
     }
 
     @Override

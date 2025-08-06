@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Hàng Việt Nam - Backend API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .api-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background: #f8f9fa;
+        }
+        .endpoint {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin: 5px 0;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: white;
+            font-weight: bold;
+        }
+        .status.running {
+            background: #28a745;
+        }
+        .status.stopped {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍜 Nhà Hàng Việt Nam - Backend API</h1>
+        
+        <div class="api-section">
+            <h2>📊 Trạng thái hệ thống</h2>
+            <p><span class="status running">● Đang chạy</span> - Backend API đã sẵn sàng!</p>
+            <p><strong>URL:</strong> <code>http://localhost:8080</code></p>
+            <p><strong>Database:</strong> SQLite (nhahangvietnam.db)</p>
+        </div>
+
+        <div class="api-section">
+            <h2>🔐 Authentication APIs</h2>
+            <div class="endpoint">POST /api/auth/signin</div>
+            <div class="endpoint">POST /api/auth/signup</div>
+            <div class="endpoint">POST /api/auth/logout</div>
+        </div>
+
+        <div class="api-section">
+            <h2>🛍️ Product APIs</h2>
+            <div class="endpoint">GET /api/product/all</div>
+            <div class="endpoint">GET /api/product/detail/{id}</div>
+            <div class="endpoint">GET /api/all-products</div>
+            <div class="endpoint">POST /api/product/add (ADMIN)</div>
+            <div class="endpoint">PUT /api/product/{id} (ADMIN)</div>
+            <div class="endpoint">DELETE /api/product/{id} (ADMIN)</div>
+        </div>
+
+        <div class="api-section">
+            <h2>👥 User Management APIs</h2>
+            <div class="endpoint">GET /api/user/all (ADMIN)</div>
+            <div class="endpoint">PUT /api/user/{id} (ADMIN)</div>
+            <div class="endpoint">DELETE /api/user/{id} (ADMIN)</div>
+        </div>
+
+        <div class="api-section">
+            <h2>🔧 Công nghệ sử dụng</h2>
+            <ul>
+                <li><strong>Framework:</strong> Spring Boot 3.2.0</li>
+                <li><strong>Security:</strong> Spring Security + JWT</li>
+                <li><strong>Database:</strong> SQLite</li>
+                <li><strong>ORM:</strong> Spring Data JPA</li>
+                <li><strong>Build Tool:</strong> Maven</li>
+            </ul>
+        </div>
+
+        <div class="api-section">
+            <h2>📝 Hướng dẫn sử dụng</h2>
+            <p>1. <strong>Frontend:</strong> Chạy React app tại <code>http://localhost:5173</code></p>
+            <p>2. <strong>API Testing:</strong> Sử dụng Postman hoặc curl để test APIs</p>
+            <p>3. <strong>Database:</strong> File SQLite được tạo tự động</p>
+        </div>
+    </div>
+</body>
+</html> 

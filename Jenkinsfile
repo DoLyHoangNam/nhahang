@@ -9,11 +9,21 @@ pipeline {
             }
         }
 
+        stage('Check Environment') {
+            steps {
+                echo 'Kiểm tra môi trường...'
+                bat 'java -version'
+                bat 'mvn -version'
+                bat 'node -v'
+                bat 'npm -v'
+            }
+        }
+
         stage('Build Backend') {
             steps {
                 echo 'Đang build backend Java Spring Boot...'
                 dir('backend') {
-                    bat 'mvn clean compile'
+                    bat 'mvn clean compile -q'
                 }
             }
         }
@@ -22,7 +32,7 @@ pipeline {
             steps {
                 echo 'Đang chạy test backend...'
                 dir('backend') {
-                    bat 'mvn test'
+                    bat 'mvn test -q'
                 }
             }
         }
@@ -31,7 +41,7 @@ pipeline {
             steps {
                 echo 'Đang cài đặt dependencies frontend...'
                 dir('nhahangvietnam-main') {
-                    bat 'npm install'
+                    bat 'npm install --silent'
                 }
                 
                 echo 'Đang build frontend React...'
@@ -45,7 +55,7 @@ pipeline {
             steps {
                 echo 'Đang đóng gói backend thành JAR...'
                 dir('backend') {
-                    bat 'mvn package -DskipTests'
+                    bat 'mvn package -DskipTests -q'
                 }
             }
         }

@@ -108,8 +108,8 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                echo 'Cloning source...'
-                git 'https://github.com/DoLyHoangNam/nhahang.git'
+                echo 'Clone source code...'
+                git branch: 'main', url: 'https://github.com/DoLyHoangNam/nhahang.git'
             }
         }
 

@@ -97,7 +97,7 @@
 //     }
 // }
 
-/////////////// Jenkinsfile for Frontend Deployment ///////////////
+/////////////// Jenkinsfile for Frontend Deployment
 
 pipeline {
     agent any

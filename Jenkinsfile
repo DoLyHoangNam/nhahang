@@ -1,69 +1,89 @@
 pipeline {
     agent any
 
-    // environment {
-    //     DOCKER_IMAGE = 'zyond/nodejs_cicd'
-    //     DOCKER_TAG = 'latest'
-    //     CONTAINER_NAME = 'web_nginx'
-    //     DOCKER_CREDENTIALS_ID = 'a8043e21-320b-4f12-b72e-612d7a93c553'
-    // }
-
     tools {
-        nodejs "NodeJS 24"
+        maven 'Maven'
+        nodejs 'NodeJS'
     }
 
     stages {
         stage('Clone') {
             steps {
-                echo '📥 Cloning source code...'
-                git branch: 'main', url: 'https://github.com/DoLyHoangNam/nhahang.git'
+                echo 'Đang clone mã nguồn...'
+                git 'https://github.com/DoLyHoangNam/nhahang.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Backend') {
             steps {
-                echo '📦 Installing npm packages...'
-                bat 'npm install'
+                echo 'Đang build backend Java Spring Boot...'
+                dir('backend') {
+                    bat 'mvn clean compile'
+                }
             }
         }
 
-        stage('Build Expo Web') {
+        stage('Test Backend') {
             steps {
-                echo '🏗️ Building Expo Web...'
-                bat 'npx expo export --platform web --output-dir dist'
+                echo 'Đang chạy test backend...'
+                dir('backend') {
+                    bat 'mvn test'
+                }
             }
         }
-//  ---------------------------------------------- docker nhaaaaa -----------------------
 
-        // stage('Build Docker Image') {
-        //     steps {
-        //         script {
-        //             echo '🐳 Building Docker image...'
-        //             docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-        //         }
-        //     }
-        // }
+        stage('Build Frontend') {
+            steps {
+                echo 'Đang cài đặt dependencies frontend...'
+                dir('nhahangvietnam-main') {
+                    bat 'npm install'
+                }
+                
+                echo 'Đang build frontend React...'
+                dir('nhahangvietnam-main') {
+                    bat 'npm run build'
+                }
+            }
+        }
 
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             echo '📤 Pushing Docker image to Docker Hub...'
-        //             docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-        //                 docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Package Backend') {
+            steps {
+                echo 'Đang đóng gói backend thành JAR...'
+                dir('backend') {
+                    bat 'mvn package -DskipTests'
+                }
+            }
+        }
 
-        // stage('Deploy Container') {
-        //     steps {
-        //         script {
-        //             echo '🚀 Restarting container...'
-        //             bat "docker stop ${CONTAINER_NAME} || exit 0"
-        //             bat "docker rm ${CONTAINER_NAME} || exit 0"
-        //             bat "docker run -d -p 3000:80 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:${DOCKER_TAG}"
-        //         }
-        //     }
-        // }
+        stage('Archive Artifacts') {
+            steps {
+                echo 'Đang lưu trữ artifacts...'
+                archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'nhahangvietnam-main/dist/**/*', fingerprint: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Đang chuẩn bị deploy...'
+                // Có thể thêm các bước deploy ở đây
+                // Ví dụ: copy files, restart services, etc.
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline hoàn thành!'
+        }
+        success {
+            echo 'Build thành công!'
+        }
+        failure {
+            echo 'Build thất bại!'
+        }
+        cleanup {
+            echo 'Dọn dẹp workspace...'
+        }
     }
 }

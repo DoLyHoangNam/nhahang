@@ -20,7 +20,8 @@ pipeline {
         stage('Clone') {
             steps {
                 echo '🔄 Đang clone mã nguồn...'
-                git 'https://github.com/DoLyHoangNam/nhahang.git'
+                git branch: 'main', url: 'https://github.com/DoLyHoangNam/nhahang.git'
+
             }
         }
 

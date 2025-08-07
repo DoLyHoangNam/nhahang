@@ -121,7 +121,7 @@ pipeline {
                 echo '✅ Backend deployed successfully!'
             }
         }
-
+//git
         stage('Deploy Frontend') {
             steps {
                 echo '🚀 Đang deploy frontend...'
